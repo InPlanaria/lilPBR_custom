@@ -58,6 +58,9 @@ msgstr "UVモード"
 msgid "UV Randomize"
 msgstr "UVランダマイズ"
 
+msgid "UV Hash Multiplier"
+msgstr "UVハッシュ影響度"
+
 msgid "Normal Map"
 msgstr "ノーマルマップ"
 

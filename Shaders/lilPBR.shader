@@ -13,6 +13,9 @@ Shader "lilPBR"
         _MainTex ("Albedo", 2D) = "white" {}
         [Enum(Ignore, 0, Color, 1, Occlusion (A), 2)] _VertexColorMode ("Vertex Color Mode", Int) = 0
         [KeywordEnum(Default, Planar, Triplanar,TriplanarLocal)] _UVMode ("UV Mode", Int) = 0
+
+         _UVHashMultiplier("UV Hash Multiplier", Range(0.0, 1.0)) = 1.0
+
         [LILKeyword(_RANDOMIZE_UV)][ToggleUI] _RandomizeUV ("UV Randomize", Int) = 0
         [LILKeyword(_ATRASMASK)][NoScaleOffset] _AtrasMask ("Atras Mask", 2D) = "white" {}
         [LILPropertyCache] _BumpScale("Scale", Float) = 1.0

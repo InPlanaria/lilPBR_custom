@@ -290,6 +290,7 @@ void Planar(inout ShadingParams p, inout half3x3 matrixTBN, inout float2 uv, ino
 void BiPlanar(inout ShadingParams p, inout half3x3 matrixTBN, inout float2 uv, inout float2 dx, inout float2 dy, float4 posSV)
 {
     float hash = ibuki(posSV+1) * 0.1 - 0.05;
+    hash = hash * _UVHashMultiplier;
     #if defined(SHADOWS_DEPTH)
         if(!IsPerspective()) hash = 0;
     #endif
@@ -312,7 +313,7 @@ void BiPlanar(inout ShadingParams p, inout half3x3 matrixTBN, inout float2 uv, i
 void TriPlanar(inout ShadingParams p, inout half3x3 matrixTBN, inout float2 uv, inout float2 dx, inout float2 dy, float4 posSV)
 {
     float hash = ibuki(posSV+1) * 0.1 - 0.05;
-    hash = hash * 0.01;
+    hash = hash * _UVHashMultiplier;
     #if defined(SHADOWS_DEPTH)
         if(!IsPerspective()) hash = 0;
     #endif
@@ -343,7 +344,7 @@ void TriPlanar(inout ShadingParams p, inout half3x3 matrixTBN, inout float2 uv, 
 void TriPlanarLocal(inout ShadingParams p, inout half3x3 matrixTBN, inout float2 uv, inout float2 dx, inout float2 dy, float4 posSV)
 {
     float hash = ibuki(posSV+1) * 0.1 - 0.05;
-    hash = hash * 0.01;
+    hash = hash * _UVHashMultiplier;
     #if defined(SHADOWS_DEPTH)
         if(!IsPerspective()) hash = 0;
     #endif
@@ -383,6 +384,7 @@ void TriPlanarLocal(inout ShadingParams p, inout half3x3 matrixTBN, inout float2
 void RandomizeUV(inout half3x3 matrixTBN, inout float2 uv, float4 posSV)
 {
     float hash = ibuki(posSV+2) * 0.2 + 0.4;
+    hash = hash * _UVHashMultiplier;
     float2 blend = pow(frac(uv),10);
     #if defined(SHADOWS_DEPTH)
         if(!IsPerspective()) hash = 0.5;

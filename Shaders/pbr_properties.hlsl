@@ -98,7 +98,8 @@ LILPBR_PROPERTY(float,_WindLeafSoftness)\
 LILPBR_PROPERTY(float,_DistanceFade)\
 LILPBR_PROPERTY(float,_DistanceFadeStart)\
 LILPBR_PROPERTY(float,_DistanceFadeEnd)\
-LILPBR_PROPERTY(uint,_ShaderLayer)
+LILPBR_PROPERTY(uint,_ShaderLayer)\
+LILPBR_PROPERTY(float,_UVHashMultiplier)
 
 #define LILPBR_TEXTURES \
 LILPBR_TEXTURE(Texture2D,_MainTex)\
