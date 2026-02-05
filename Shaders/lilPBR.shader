@@ -12,7 +12,7 @@ Shader "lilPBR"
         [LILPropertyCache] _Color ("Color", Color) = (1,1,1,1)
         _MainTex ("Albedo", 2D) = "white" {}
         [Enum(Ignore, 0, Color, 1, Occlusion (A), 2)] _VertexColorMode ("Vertex Color Mode", Int) = 0
-        [KeywordEnum(Default, Planar, Triplanar)] _UVMode ("UV Mode", Int) = 0
+        [KeywordEnum(Default, Planar, Triplanar,TriplanarLocal)] _UVMode ("UV Mode", Int) = 0
         [LILKeyword(_RANDOMIZE_UV)][ToggleUI] _RandomizeUV ("UV Randomize", Int) = 0
         [LILKeyword(_ATRASMASK)][NoScaleOffset] _AtrasMask ("Atras Mask", 2D) = "white" {}
         [LILPropertyCache] _BumpScale("Scale", Float) = 1.0
@@ -293,7 +293,7 @@ Shader "lilPBR"
             HLSLPROGRAM
             #pragma target 5.0
 
-            #pragma shader_feature_local _UVMODE_DEFAULT _UVMODE_PLANAR _UVMODE_TRIPLANAR
+            #pragma shader_feature_local _UVMODE_DEFAULT _UVMODE_PLANAR _UVMODE_TRIPLANAR _UVMODE_TRIPLANARLOCAL
             #pragma shader_feature_local _ATRASMASK
             #pragma shader_feature_local_fragment _ _CUTOUT _DITHER _TRANSPARENT
             #pragma shader_feature_local _RANDOMIZE_UV
@@ -436,7 +436,7 @@ Shader "lilPBR"
             HLSLPROGRAM
             #pragma target 5.0
 
-            #pragma shader_feature_local _UVMODE_DEFAULT _UVMODE_PLANAR _UVMODE_TRIPLANAR
+            #pragma shader_feature_local _UVMODE_DEFAULT _UVMODE_PLANAR _UVMODE_TRIPLANAR _UVMODE_TRIPLANARLOCAL
             #pragma shader_feature_local _ATRASMASK
             #pragma shader_feature_local_fragment _ _CUTOUT _DITHER _TRANSPARENT
             #pragma shader_feature_local _RANDOMIZE_UV
@@ -524,7 +524,7 @@ Shader "lilPBR"
             HLSLPROGRAM
             #pragma target 5.0
 
-            #pragma shader_feature_local _UVMODE_DEFAULT _UVMODE_PLANAR _UVMODE_TRIPLANAR
+            #pragma shader_feature_local _UVMODE_DEFAULT _UVMODE_PLANAR _UVMODE_TRIPLANAR _UVMODE_TRIPLANARLOCAL
             #pragma shader_feature_local _ATRASMASK
             #pragma shader_feature_local_fragment _ _CUTOUT _DITHER _TRANSPARENT
             #pragma shader_feature_local _RANDOMIZE_UV
@@ -599,7 +599,7 @@ Shader "lilPBR"
             HLSLPROGRAM
             #pragma target 5.0
 
-            #pragma shader_feature_local _UVMODE_DEFAULT _UVMODE_PLANAR _UVMODE_TRIPLANAR
+            #pragma shader_feature_local _UVMODE_DEFAULT _UVMODE_PLANAR _UVMODE_TRIPLANAR _UVMODE_TRIPLANARLOCAL
             #pragma shader_feature_local _ATRASMASK
             #pragma shader_feature_local_fragment _ _CUTOUT _DITHER _TRANSPARENT
             #pragma shader_feature_local _RANDOMIZE_UV
@@ -761,7 +761,7 @@ Shader "lilPBR"
             HLSLPROGRAM
             #pragma target 5.0
 
-            #pragma shader_feature_local _UVMODE_DEFAULT _UVMODE_PLANAR _UVMODE_TRIPLANAR
+            #pragma shader_feature_local _UVMODE_DEFAULT _UVMODE_PLANAR _UVMODE_TRIPLANAR _UVMODE_TRIPLANARLOCAL
             #pragma shader_feature_local _ATRASMASK
             #pragma shader_feature_local_fragment _ _CUTOUT _DITHER _TRANSPARENT
             #pragma shader_feature_local _RANDOMIZE_UV
@@ -878,7 +878,7 @@ Shader "lilPBR"
             HLSLPROGRAM
             #pragma target 5.0
 
-            #pragma shader_feature_local _UVMODE_DEFAULT _UVMODE_PLANAR _UVMODE_TRIPLANAR
+            #pragma shader_feature_local _UVMODE_DEFAULT _UVMODE_PLANAR _UVMODE_TRIPLANAR _UVMODE_TRIPLANARLOCAL
             #pragma shader_feature_local _ATRASMASK
             #pragma shader_feature_local_fragment _ _CUTOUT _DITHER _TRANSPARENT
             #pragma shader_feature_local _RANDOMIZE_UV
@@ -1022,7 +1022,7 @@ Shader "lilPBR"
             #pragma multi_compile_fragment VERTEXLIGHT_ON
             #pragma multi_compile _ LOD_FADE_CROSSFADE
 
-            #pragma shader_feature_local _UVMODE_DEFAULT _UVMODE_PLANAR _UVMODE_TRIPLANAR
+            #pragma shader_feature_local _UVMODE_DEFAULT _UVMODE_PLANAR _UVMODE_TRIPLANAR _UVMODE_TRIPLANARLOCAL
             #pragma shader_feature_local _ATRASMASK
             #pragma shader_feature_local_fragment _ _CUTOUT _DITHER _TRANSPARENT
             #pragma shader_feature_local _RANDOMIZE_UV
@@ -1116,7 +1116,7 @@ Shader "lilPBR"
             #pragma multi_compile_instancing
             #pragma multi_compile _ LOD_FADE_CROSSFADE
 
-            #pragma shader_feature_local _UVMODE_DEFAULT _UVMODE_PLANAR _UVMODE_TRIPLANAR
+            #pragma shader_feature_local _UVMODE_DEFAULT _UVMODE_PLANAR _UVMODE_TRIPLANAR _UVMODE_TRIPLANARLOCAL
             #pragma shader_feature_local _RANDOMIZE_UV
             #pragma shader_feature_local _ATRASMASK
             #pragma shader_feature_local_fragment _ _CUTOUT _DITHER _TRANSPARENT
@@ -1202,7 +1202,7 @@ Shader "lilPBR"
             #pragma multi_compile_instancing
             #pragma multi_compile _ LOD_FADE_CROSSFADE
 
-            #pragma shader_feature_local _UVMODE_DEFAULT _UVMODE_PLANAR _UVMODE_TRIPLANAR
+            #pragma shader_feature_local _UVMODE_DEFAULT _UVMODE_PLANAR _UVMODE_TRIPLANAR _UVMODE_TRIPLANARLOCAL
             #pragma shader_feature_local _ATRASMASK
             #pragma shader_feature_local_fragment _ _CUTOUT _DITHER _TRANSPARENT
             #pragma shader_feature_local _RANDOMIZE_UV

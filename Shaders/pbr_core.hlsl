@@ -339,6 +339,46 @@ void TriPlanar(inout ShadingParams p, inout half3x3 matrixTBN, inout float2 uv, 
 }
 #endif
 
+#ifdef _UVMODE_TRIPLANARLOCAL
+void TriPlanarLocal(inout ShadingParams p, inout half3x3 matrixTBN, inout float2 uv, inout float2 dx, inout float2 dy, float4 posSV)
+{
+    float hash = ibuki(posSV+1) * 0.1 - 0.05;
+    hash = hash * 0.01;
+    #if defined(SHADOWS_DEPTH)
+        if(!IsPerspective()) hash = 0;
+    #endif
+    // Convert to local space
+    half3 localNormal = W2OVector(matrixTBN[2]);
+    float3 localPos = W2O(p.posWorld);
+    
+    // Calculate object scale for inverse UV scaling
+    float scaleX = length(O2W(float4(1,0,0,0)) - O2W(float4(0,0,0,0)));
+    float scaleY = length(O2W(float4(0,1,0,0)) - O2W(float4(0,0,0,0)));
+    float scaleZ = length(O2W(float4(0,0,1,0)) - O2W(float4(0,0,0,0)));
+    
+    float signX = sign(localNormal.x);
+    float signY = sign(localNormal.y);
+    float signZ = sign(localNormal.z);
+    float2 uvX = float2(localPos.z*scaleZ,localPos.y*scaleY);//localPos.zy * float2(signX,1) / scaleX;
+    float2 uvY = float2(localPos.x*scaleX,localPos.z*scaleZ);//localPos.xz * float2(signY,1) / scaleY;
+    float2 uvZ = float2(localPos.y*scaleY,localPos.x*scaleX);//localPos.yx * float2(signZ,1) / scaleZ;
+    float blendX = abs(localNormal.x);
+    float blendY = abs(localNormal.y);
+    float blendZ = abs(localNormal.z);
+    uv = (blendX+hash) > blendZ ? uvX : uvZ;
+    uv = (blendY+hash) > blendX && (blendY+hash) > blendZ ? uvY : uv;
+    matrixTBN[0] = (blendX+hash) > blendZ ? half3(0,0,signX) : half3(0,signZ,0);
+    matrixTBN[0] = (blendY+hash) > blendX && (blendY+hash) > blendZ ? half3(signY,0,0) : matrixTBN[0];
+    matrixTBN[1] = (blendX+hash) > blendZ ? half3(0,1,0) : half3(1,0,0);
+    matrixTBN[1] = (blendY+hash) > blendX && (blendY+hash) > blendZ ? half3(0,0,1) : matrixTBN[1];
+    matrixTBN[0] = OrthoNormalize(matrixTBN[0], matrixTBN[2]);
+    matrixTBN[1] = OrthoNormalize(matrixTBN[1], matrixTBN[2]);
+    uv = uv * _MainTex_ST.xy + _MainTex_ST.zw;
+    dx = (blendY > blendX && blendY > blendZ ? ddx(uvY) : (blendX > blendZ ? ddx(uvX) : ddx(uvZ))) * _MainTex_ST.xy;
+    dy = (blendY > blendX && blendY > blendZ ? ddy(uvY) : (blendX > blendZ ? ddy(uvX) : ddy(uvZ))) * _MainTex_ST.xy;
+}
+#endif
+
 #ifdef _RANDOMIZE_UV
 void RandomizeUV(inout half3x3 matrixTBN, inout float2 uv, float4 posSV)
 {
@@ -602,6 +642,8 @@ half4 Shading(v2f i, float4 posSV, float3 posWorld, half3 V, half3 tangent, half
     Planar(p, matrixTBN, uv_MainTex, dx, dy, posSV);
     #elif defined(_UVMODE_TRIPLANAR)
     TriPlanar(p, matrixTBN, uv_MainTex, dx, dy, posSV);
+    #elif defined(_UVMODE_TRIPLANARLOCAL)
+    TriPlanarLocal(p, matrixTBN, uv_MainTex, dx, dy, posSV);
     #endif
     float uvDensity = UVDensity(posWorld, dx, dy);
 
@@ -938,6 +980,8 @@ void ShadingAlpha(v2f i, float4 posSV, float3 posWorld, half3 V, half3 tangent, 
     Planar(p, matrixTBN, uv_MainTex, dx, dy, posSV);
     #elif defined(_UVMODE_TRIPLANAR)
     TriPlanar(p, matrixTBN, uv_MainTex, dx, dy, posSV);
+    #elif defined(_UVMODE_TRIPLANARLOCAL)
+    TriPlanarLocal(p, matrixTBN, uv_MainTex, dx, dy, posSV);
     #endif
     float uvDensity = UVDensity(posWorld, dx, dy);
 
