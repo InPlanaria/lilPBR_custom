@@ -312,6 +312,7 @@ void BiPlanar(inout ShadingParams p, inout half3x3 matrixTBN, inout float2 uv, i
 void TriPlanar(inout ShadingParams p, inout half3x3 matrixTBN, inout float2 uv, inout float2 dx, inout float2 dy, float4 posSV)
 {
     float hash = ibuki(posSV+1) * 0.1 - 0.05;
+    hash = hash * 0.01;
     #if defined(SHADOWS_DEPTH)
         if(!IsPerspective()) hash = 0;
     #endif
